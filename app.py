@@ -406,13 +406,15 @@ def main():
             webrtc_streamer(
                 key="realtime-segmentation",
                 mode=WebRtcMode.SENDRECV,
-                rtc_configuration=RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}),
+                rtc_configuration=rtc_config,
                 video_frame_callback=video_frame_callback,
-                media_stream_constraints={"video": True, "audio": False},
+                media_stream_constraints={
+                    "video": {"width": 320, "height": 240, "frameRate": {"max": 5}},
+                    "audio": False
+                },
                 async_processing=True,
             )
-
-        st.markdown('</div>', unsafe_allow_html=True)
+                    st.markdown('</div>', unsafe_allow_html=True)
         
         # This part now only processes static images from upload or single capture
         if image_np is not None:
