@@ -414,7 +414,8 @@ def main():
                 },
                 async_processing=True,
             )
-                    st.markdown('</div>', unsafe_allow_html=True)
+            
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # This part now only processes static images from upload or single capture
         if image_np is not None:
