@@ -12,6 +12,14 @@ import io
 import json
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration # NEW: Import for real-time video
 import av # NEW: Import for video frame handling
+from streamlit_webrtc import RTCConfiguration
+
+rtc_config = RTCConfiguration({
+    "iceServers": [
+        {"urls": ["stun:stun.l.google.com:19302"]}
+    ]
+})
+
 
 # =========================
 # 🎨 Configuration & Setup
