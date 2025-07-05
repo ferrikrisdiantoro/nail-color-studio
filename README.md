@@ -1,116 +1,60 @@
-# 💅 Nail Color Studio
+# 💅 Nail Color Studio - Intelligent Nail Segmentation and Demo App
 
-**AI-Powered Nail Segmentation & Visualization using TensorFlow, TFLite & Streamlit**
+![demo](https://nail-color-studio-demo.streamlit.app/_static/og.png)
 
-[![Streamlit Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-green)](https://nail-color-studio-demo.streamlit.app/)
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+**Nail Color Studio** is a smart AI-powered application that performs **semantic segmentation on fingernails** using a custom-trained MobileNetV2-based model. This project demonstrates both model development and Streamlit deployment, enabling interactive demos for end-users.
 
----
-
-## 📌 Overview
-
-**Nail Color Studio** is a computer vision-based web application that automatically detects and segments fingernails from hand images and lets users try out virtual nail polish. Built with a custom segmentation model trained using TensorFlow & MobileNetV2, and deployed with a Streamlit front-end powered by a TFLite-optimized model.
-
-### 🔗 [Live Demo →](https://nail-color-studio-demo.streamlit.app/)
+> 🧠 Built by combining deep learning, computer vision, and TensorFlow Lite for real-time experience.
 
 ---
 
-## 🧠 Model Highlights
+## 📌 Live Demo
 
-- ✨ **Architecture**: Custom lightweight segmentation model based on `MobileNetV2` backbone (DeepLabV3+ inspired).
-- 📱 **TFLite Conversion**: Optimized for mobile inference with metadata via `tflite-support`.
-- 🎯 **Performance Metrics**:
-  - Dice Coefficient
-  - IoU Score
-  - Precision & Recall
+👉 [Try the Web App on Streamlit](https://nail-color-studio-demo.streamlit.app/)
 
 ---
 
-## 🗂 Project Structure
+## 📁 Project Structure
 
 ```
-nail-color-studio/
-│
+├── app.py                            # Streamlit frontend app
+├── kuku_test2.py                    # Model training, evaluation & TFLite conversion
+├── Nail_Segmentation_MobileNetV2.tflite # Exported TFLite model
 ├── notebook/
-│   └── kuku_test2.ipynb            # Jupyter notebook for experimentation
-├── kuku_test2.py                   # Full model training pipeline
-├── Nail_Segmentation_MobileNetV2.tflite  # Final optimized TFLite model
-├── app.py                          # Streamlit web app
-├── requirements.txt                # Python dependencies
-└── .gitignore
+│   └── kuku_test2.ipynb             # Training notebook (Colab)
+├── requirements.txt                 # All dependencies
+├── .gitignore
 ```
 
 ---
 
-## 🏗 How It Works
+## 🧠 Model Architecture
 
-### 🔬 1. Model Development (`kuku_test2.py`)
-- Uses the **Roboflow API** to download annotated COCO-style datasets.
-- Trains a **custom U-Net-style model** with a MobileNetV2 encoder.
-- Includes:
-  - Training visualization callback
-  - Custom metrics & losses (Dice, IoU, Precision, Recall)
-  - TFLite conversion & metadata population
+The custom model is inspired by **DeepLabV3+/FPN-style segmentation**, using **MobileNetV2** as the feature extractor backbone. This makes it:
 
-### 🌐 2. Streamlit App (`app.py`)
-- Loads the `TFLite` model using `tflite-runtime`.
-- Accepts image input and runs segmentation on the client side.
-- Allows users to apply custom **nail polish colors** interactively.
+- ✅ Lightweight for mobile deployment
+- ✅ Compatible with TensorFlow Lite and MediaPipe
+- ✅ Highly accurate on small objects like fingernails
 
----
+### ✨ Features
 
-## 🚀 Getting Started
-
-### ⚙️ 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 🧪 2. Run Streamlit App Locally
-
-```bash
-streamlit run app.py
-```
-
-> Make sure `Nail_Segmentation_MobileNetV2.tflite` is present in the root directory.
+- **Custom COCO Dataset**: Annotated via Roboflow
+- **Modular Training Pipeline**: With custom callbacks for Dice, IoU, Precision, Recall
+- **Realtime Visualization**: Integrated callbacks to visualize training predictions
+- **Export to TFLite**: With metadata support for Task Library inference
 
 ---
 
-## 🧰 Tech Stack
+## 🧪 Model Training
 
-| Area             | Tech / Tool |
-|------------------|-------------|
-| Model Training   | TensorFlow, MobileNetV2, COCO Dataset, Roboflow |
-| Optimization     | TFLite, MetadataWriter |
-| Frontend         | Streamlit |
-| Visualization    | Matplotlib |
-| Deployment       | Streamlit Cloud |
-| Dataset Format   | COCO JSON (via Roboflow) |
+Model training is performed in `kuku_test2.py` or the Colab notebook. It includes:
 
----
+- Custom dataset loader (`COCO format`)
+- Segmentation metrics: `dice`, `IoU`, `precision`, `recall`
+- Visualization & analysis tools (matplotlib dashboards)
+- TFLite export with embedded label metadata
 
-## 📊 Example Results
-
-| Input Image | Ground Truth Mask | Predicted Mask |
-|-------------|-------------------|----------------|
-| ![original](assets/sample1.jpg) | ![gt](assets/sample1_gt.jpg) | ![pred](assets/sample1_pred.jpg) |
-
-*(For illustration. Real results shown in the demo.)*
-
----
-
-## 🔬 Model Training Insights
-
-The training pipeline supports advanced metrics logging and automatic performance monitoring, including:
-- EarlyStopping
-- ReduceLROnPlateau
-- ModelCheckpoint
-- Live training curve plotting
-
-> To retrain the model, run:
+To train the model:
 
 ```bash
 python kuku_test2.py
@@ -118,52 +62,117 @@ python kuku_test2.py
 
 ---
 
-## 📦 Exported Model
+## 🔍 Inference Pipeline
 
-The model is saved as:
+After training, the model is exported to `.tflite` and used in the demo app:
 
-```bash
-Nail_Segmentation_MobileNetV2.tflite
+```python
+interpreter = tf.lite.Interpreter(model_path="Nail_Segmentation_MobileNetV2.tflite")
 ```
 
-Includes:
-- Embedded label metadata
-- Input normalization info
-- Ready for TensorFlow Lite Task Library or Streamlit inference
+The demo shows:
+
+- Input nail image
+- Predicted mask overlay
+- Ability to apply colors or effects
 
 ---
 
-## 🧪 Requirements
+## 🚀 Streamlit Demo App
 
-- Python ≥ 3.9
-- TensorFlow ≥ 2.10
+The `app.py` file is a Streamlit-powered interactive app that lets users:
+
+- Upload an image of a hand
+- See the segmented nails in real-time
+- Apply different nail polish colors digitally
+
+### Run locally
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 📦 Installation
+
+Create a clean virtual environment and install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Key dependencies include:
+
+- `tensorflow==2.19.0`
+- `opencv-python-headless`
+- `streamlit`
+- `tflite-support-nightly`
+
+---
+
+## 🔬 Metrics Visualization
+
+During training, multiple callbacks generate performance plots:
+
+- **Accuracy & Loss**
+- **Dice & IoU Coefficients**
+- **Precision & Recall**
+
+All charts are saved in high resolution.
+
+---
+
+## 🎯 Performance
+
+| Metric       | Value (Val Set) |
+|--------------|------------------|
+| Accuracy     | > 0.95           |
+| Dice Score   | > 0.87           |
+| IoU          | > 0.80           |
+| Precision    | > 0.89           |
+| Recall       | > 0.85           |
+
+---
+
+## 🧾 Metadata + TFLite
+
+TFLite model includes:
+
+- **Embedded metadata**
+- **Label support**
+- **Optimized size** for deployment in mobile or web
+
+Metadata was added using `tflite-support-nightly`.
+
+---
+
+## 🛠️ Tech Stack
+
+- Python 3.10
+- TensorFlow 2.19
 - Streamlit
-- Roboflow SDK
-- TFLite-Support
+- OpenCV
+- TFLite
+- Roboflow (for dataset management)
+- Matplotlib
 
 ---
 
-## 📸 Screenshot
-
-![Demo UI](assets/demo_screenshot.png)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙌 Acknowledgements
-
-- [Roboflow](https://roboflow.com/) for dataset hosting
-- [TensorFlow Lite](https://www.tensorflow.org/lite) for model deployment tools
-- [Streamlit](https://streamlit.io) for easy deployment
-
----
-
-## ✍️ Author
+## 📌 Author
 
 **Ferri Krisdiantoro**  
-[GitHub](https://github.com/ferrikrisdiantoro) | [LinkedIn](https://linkedin.com/in/ferrikrisdiantoro)
+Data Scientist & ML Engineer  
+[GitHub](https://github.com/ferrikrisdiantoro)
+
+---
+
+## 📃 License
+
+MIT License © 2025 Ferri Krisdiantoro
+
+---
+
+## 🧠 Want to Contribute?
+
+Feel free to fork, improve the model, or submit PRs for improvements!
