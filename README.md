@@ -20,8 +20,6 @@
 ├── app.py                            # Streamlit frontend app
 ├── kuku_test2.py                    # Model training, evaluation & TFLite conversion
 ├── Nail_Segmentation_MobileNetV2.tflite # Exported TFLite model
-├── notebook/
-│   └── kuku_test2.ipynb             # Training notebook (Colab)
 ├── requirements.txt                 # All dependencies
 ├── .gitignore
 ```
@@ -53,12 +51,6 @@ Model training is performed in `kuku_test2.py` or the Colab notebook. It include
 - Segmentation metrics: `dice`, `IoU`, `precision`, `recall`
 - Visualization & analysis tools (matplotlib dashboards)
 - TFLite export with embedded label metadata
-
-To train the model:
-
-```bash
-python kuku_test2.py
-```
 
 ---
 
@@ -133,24 +125,10 @@ All charts are saved in high resolution.
 | Precision    | > 0.89           |
 | Recall       | > 0.85           |
 
----
-
-## 🧾 Metadata + TFLite
-
-TFLite model includes:
-
-- **Embedded metadata**
-- **Label support**
-- **Optimized size** for deployment in mobile or web
-
-Metadata was added using `tflite-support-nightly`.
-
----
-
 ## 🛠️ Tech Stack
 
-- Python 3.10
-- TensorFlow 2.19
+- Python 3.12
+- TensorFlow
 - Streamlit
 - OpenCV
 - TFLite
@@ -172,7 +150,3 @@ Data Scientist & ML Engineer
 MIT License © 2025 Ferri Krisdiantoro
 
 ---
-
-## 🧠 Want to Contribute?
-
-Feel free to fork, improve the model, or submit PRs for improvements!
