@@ -20,7 +20,6 @@ rtc_config = RTCConfiguration({
     ]
 })
 
-
 # =========================
 # 🎨 Configuration & Setup
 # =========================
